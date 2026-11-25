@@ -9,6 +9,7 @@ import {
 } from "react";
 import { toothInfo } from "../anatomy/fdi";
 import { getToothGeometry } from "../anatomy/geometry";
+import type { FindingCode } from "../findings/catalog";
 import {
 	type Finding,
 	type OdontogramValue,
@@ -60,6 +61,8 @@ export interface OdontogramProps
 	 * every add/remove calls onChange with the new value.
 	 */
 	onChange?: (value: OdontogramValue) => void;
+	/** Findings the built-in picker may offer. Default: the whole catalogue. */
+	codes?: readonly FindingCode[];
 }
 
 /** Keyboard order of zones inside a tooth (Up/Down). */
@@ -334,6 +337,7 @@ function PickerLayer({
 	slot,
 	at,
 	value,
+	codes,
 	onChange,
 	onClose,
 }: {
@@ -341,6 +345,7 @@ function PickerLayer({
 	slot: ToothSlot | undefined;
 	at: OdontogramSelection;
 	value: OdontogramValue;
+	codes: readonly FindingCode[] | undefined;
 	onChange: (value: OdontogramValue) => void;
 	onClose: (reason: PickerCloseReason) => void;
 }) {
@@ -354,6 +359,7 @@ function PickerLayer({
 			zone={at.zone}
 			findings={value[at.fdi] ?? []}
 			chart={value}
+			codes={codes}
 			onAdd={(f) => onChange(addFinding(value, at.fdi, f))}
 			onRemove={(i) => onChange(removeFinding(value, at.fdi, i))}
 			onClose={onClose}
@@ -378,6 +384,7 @@ export function Odontogram({
 	brushColor,
 	detail,
 	onChange,
+	codes,
 	...rest
 }: OdontogramProps) {
 	const layout = useMemo(() => layoutOdontogram(dentition), [dentition]);
@@ -552,6 +559,7 @@ export function Odontogram({
 					slot={slots.get(picker.fdi)}
 					at={picker}
 					value={value}
+					codes={codes}
 					onChange={onChange}
 					onClose={close}
 				/>

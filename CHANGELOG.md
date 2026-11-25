@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.2.1 — 2026-11-25
+
+### Añadido
+
+- Prop `codes` en `<Odontogram>` y `<FindingPicker>`: los hallazgos que puede ofrecer la ventana, por ejemplo para no ofrecer los que tu proyecto ya no registra. Por defecto, todo el catálogo. No afecta al dibujo: lo ya registrado se sigue viendo.
+
 ## 0.2.0 — 2026-11-25
 
 ### Añadido

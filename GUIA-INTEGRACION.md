@@ -3,7 +3,7 @@
 Qué hay que tener en cuenta para usar la librería en un proyecto existente: datos, componentes, reglas y validación.
 
 - **Paquete:** `odontogram-periodontogram-core` (npm, MIT)
-- **Versión:** 0.2.0
+- **Versión:** 0.2.1
 - **Requisitos:** React 17 o superior, Node 18 o superior
 - **Repo:** https://github.com/kmanuelDC/odontogram_periodontogram
 
@@ -241,6 +241,7 @@ export function OdontogramaPaciente({ inicial, onGuardar }: {
 |---|---|---|
 | `value` | `OdontogramValue` | Hallazgos por FDI. |
 | `onChange` | `(value) => void` | Si está, se abre la ventana de hallazgos al hacer clic. Si no, la ficha queda en solo lectura. |
+| `codes` | `FindingCode[]` | Hallazgos que ofrece la ventana (desde 0.2.1). Por defecto, todo el catálogo. Lo ya registrado se dibuja igual. |
 | `dentition` | `"mixed" \| "permanent" \| "primary"` | Por defecto `"mixed"`, la ficha NTS completa. |
 | `boxes` | `Record<fdi, string>` | Texto libre extra en el casillero, después de las siglas. |
 | `selection` / `onSelectionChange` | `{ fdi, zone }` | Para usar tu propio menú en lugar de la ventana. `zone` puede ser `V L M D O`, `crown` o `root`. |
@@ -345,7 +346,7 @@ await api.guardarFicha(pacienteId, JSON.stringify(ficha));
 
 ---
 
-## 10. Limitaciones conocidas (0.2.0)
+## 10. Limitaciones conocidas (0.2.1)
 
 - **Textos solo en español.** No hay traducción a otros idiomas.
 - **Edéntulo total y prótesis total** no bloquean hallazgos de piezas presentes dentro de su rango.

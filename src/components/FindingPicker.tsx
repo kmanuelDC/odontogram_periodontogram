@@ -41,6 +41,8 @@ export interface FindingPickerProps {
 	 * reject (see conflictOf). Default: only this tooth's findings.
 	 */
 	chart?: OdontogramValue;
+	/** Findings the form may offer, in catalogue order. Default: all. */
+	codes?: readonly FindingCode[];
 	/** Called with a finding built from the form; may throw RangeError (shown inline). */
 	onAdd: (finding: Finding) => void;
 	onRemove: (index: number) => void;
@@ -97,6 +99,7 @@ export function FindingPicker({
 	zone,
 	findings,
 	chart = { [fdi]: findings },
+	codes: allowed = CODES,
 	onAdd,
 	onRemove,
 	onClose,
@@ -106,7 +109,7 @@ export function FindingPicker({
 	const surface = (SURFACES as readonly string[]).includes(zone)
 		? (zone as Surface)
 		: undefined;
-	const codes = offeredCodes(chart, fdi, surface);
+	const codes = offeredCodes(chart, fdi, surface, allowed);
 
 	const ref = useRef<HTMLDialogElement>(null);
 	const closeRef = useRef(onClose);
@@ -351,8 +354,12 @@ function offeredCodes(
 	chart: OdontogramValue,
 	fdi: number,
 	surface: Surface | undefined,
+	allowed: readonly FindingCode[],
 ) {
 	return CODES.filter((c) => {
+		if (!allowed.includes(c)) {
+			return false;
+		}
 		const kind = FINDINGS[c].kind;
 		if (SURFACE_KINDS.includes(kind)) {
 			return surface !== undefined && fits(chart, fdi, c, surface);

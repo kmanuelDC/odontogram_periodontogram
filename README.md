@@ -70,6 +70,7 @@ Si prefieres tu propio menú, no pases `onChange`: usa `selection` / `onSelectio
 | `dentition` | `"mixed" \| "permanent" \| "primary"` | Por defecto `"mixed"` (ficha NTS completa). |
 | `value` | `OdontogramValue` | Hallazgos por FDI. |
 | `onChange` | `(value) => void` | Activa la ventana flotante de hallazgos. |
+| `codes` | `FindingCode[]` | Hallazgos que ofrece la ventana. Por defecto, todos. |
 | `boxes` | `Record<fdi, string>` | Texto libre extra en el casillero. |
 | `selection` / `onSelectionChange` | `{ fdi, zone }` | Zona elegida: `V L M D O`, `crown` o `root`. |
 | `mode` | `"select" \| "brush"` | Seleccionar o pintar puntos. Con el pincel, los círculos siguen seleccionando si pasas `onSelectionChange`. |

@@ -290,6 +290,22 @@ describe("finding picker", () => {
 		}
 	});
 
+	it("offers only the codes the host allows", () => {
+		const { getByRole, queryByRole } = render(
+			<Odontogram
+				dentition="permanent"
+				onChange={vi.fn()}
+				codes={["crown", "missing"]}
+			/>,
+		);
+		fireEvent.click(getByRole("button", { name: "Diente 16, corona" }));
+		fireEvent.click(getByRole("button", { name: FINDING_BUTTON }));
+		expect(getByRole("option", { name: "Corona definitiva" })).toBeTruthy();
+		expect(getByRole("option", { name: "Diente ausente" })).toBeTruthy();
+		expect(queryByRole("option", { name: "Extracción indicada" })).toBeNull();
+		expect(queryByRole("option", { name: "Corona temporal" })).toBeNull();
+	});
+
 	it("moves through the list with the keyboard", () => {
 		const { getByRole } = setup();
 		fireEvent.click(getByRole("button", { name: "Diente 16, corona" }));
