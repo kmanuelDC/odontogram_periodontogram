@@ -3,7 +3,7 @@
 Qué hay que tener en cuenta para usar la librería en un proyecto existente: datos, componentes, reglas y validación.
 
 - **Paquete:** `odontogram-periodontogram-core` (npm, MIT)
-- **Versión:** 0.2.1
+- **Versión:** 0.2.2
 - **Requisitos:** React 17 o superior, Node 18 o superior
 - **Repo:** https://github.com/kmanuelDC/odontogram_periodontogram
 
@@ -197,10 +197,10 @@ Ejemplos de mensajes:
 
 ### Valida también en tu servidor
 
-El navegador no es de confianza. Usa las mismas funciones en tu API:
+El navegador no es de confianza. Usa las mismas funciones en tu API. Desde la 0.2.2, impórtalas de `odontogram-periodontogram-core/rules`: es la parte pura (catálogo, reglas, periodontograma y ficha del paciente), sin React ni CSS, en CommonJS y ESM. En el servidor no hace falta instalar React: es una dependencia opcional.
 
 ```ts
-import { addFinding, conflictOf, validateFinding } from "odontogram-periodontogram-core";
+import { addFinding, conflictOf, validateFinding } from "odontogram-periodontogram-core/rules";
 
 // Al recibir un hallazgo nuevo:
 validateFinding(fdi, finding);                  // formato (lanza RangeError)

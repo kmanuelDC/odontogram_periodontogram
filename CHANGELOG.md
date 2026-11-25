@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.2.2 — 2026-11-25
+
+### Añadido
+
+- Subpath `odontogram-periodontogram-core/rules`: catálogo, reglas clínicas (`conflictOf`, `addFinding`, `validateFinding`…), periodontograma y ficha del paciente, sin React ni CSS, en CommonJS y ESM. Sirve para validar en el servidor (Node).
+
+### Cambiado
+
+- `react` y `react-dom` son dependencias opcionales (`peerDependenciesMeta`): un servidor que sólo usa `/rules` no las instala. Los componentes las siguen necesitando.
+
 ## 0.2.1 — 2026-11-25
 
 ### Añadido

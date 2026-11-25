@@ -1,7 +1,7 @@
 {
 	"name": "odontogram-periodontogram-core",
 	"description": "Odontogram (NTS/MINSA Peru) and periodontogram React components with anatomical SVG teeth.",
-	"version": "0.2.1",
+	"version": "0.2.2",
 	"author": "Manuel Díaz Calua",
 	"license": "MIT",
 	"repository": {
@@ -50,6 +50,16 @@
 				"default": "./dist/index.cjs"
 			}
 		},
+		"./rules": {
+			"import": {
+				"types": "./dist/rules.d.ts",
+				"default": "./dist/rules.js"
+			},
+			"require": {
+				"types": "./dist/rules.d.cts",
+				"default": "./dist/rules.cjs"
+			}
+		},
 		"./style.css": "./dist/index.css",
 		"./print.css": "./dist/print.css",
 		"./package.json": "./package.json"
@@ -62,6 +72,10 @@
 	"peerDependencies": {
 		"react": ">=17",
 		"react-dom": ">=17"
+	},
+	"peerDependenciesMeta": {
+		"react": { "optional": true },
+		"react-dom": { "optional": true }
 	},
 	"devDependencies": {
 		"@biomejs/biome": "1.9.4",
