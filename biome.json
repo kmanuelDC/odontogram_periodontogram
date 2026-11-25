@@ -1,0 +1,112 @@
+{
+	"$schema": "https://biomejs.dev/schemas/1.9.4/schema.json",
+	"files": {
+		"ignore": [
+			"**/dist/**",
+			"**/storybook-static/**",
+			"**/coverage/**",
+			"**/.vercel/**",
+			"**/.next/**",
+			"**/node_modules/**"
+		]
+	},
+	"organizeImports": {
+		"enabled": true
+	},
+	"css": {
+		"formatter": {
+			"enabled": true
+		},
+		"linter": {
+			"enabled": true
+		}
+	},
+	"linter": {
+		"enabled": true,
+		"rules": {
+			"nursery": {
+				"useSortedClasses": {
+					"fix": "safe",
+					"level": "error",
+					"options": {
+						"attributes": ["classList"],
+						"functions": ["clsx", "cm", "cva", "tw"]
+					}
+				}
+			},
+			"all": true,
+			"style": {
+				"noDefaultExport": "off",
+				"useFilenamingConvention": "off",
+				"useNamingConvention": {
+					"level": "error",
+					"options": {
+						"strictCase": false
+					}
+				}
+			},
+			"performance": {
+				"noReExportAll": "off",
+				"noBarrelFile": "off"
+			},
+			"suspicious": {
+				"noReactSpecificProps": "off",
+				"noConsole": {
+					"fix": "none",
+					"level": "warn"
+				},
+				"noConsoleLog": {
+					"fix": "none",
+					"level": "warn"
+				},
+				"noExplicitAny": "off"
+			},
+			"correctness": {
+				"useImportExtensions": "off",
+				"noUndeclaredDependencies": "off",
+				"noUnusedVariables": "off",
+				"noNodejsModules": "off",
+				"noUndeclaredVariables": "off",
+				"noUnusedFunctionParameters": "off"
+			}
+		}
+	},
+	"formatter": {
+		"enabled": true
+	},
+	"overrides": [
+		{
+			"include": ["scripts/**"],
+			"linter": {
+				"rules": {
+					"suspicious": {
+						"noConsole": "off",
+						"noConsoleLog": "off"
+					}
+				}
+			}
+		},
+		{
+			"include": [
+				"src/anatomy/geometry.ts",
+				"src/components/ToothSvg.tsx",
+				"src/perio/model.ts",
+				"tests/perio.test.ts",
+				"src/stories/Periodontogram.stories.tsx",
+				"tests/Periodontogram.test.tsx",
+				"src/components/Periodontogram.tsx",
+				"src/stories/Integration.stories.tsx",
+				"tests/patient.test.tsx",
+				"src/stories/Theme.stories.tsx",
+				"tests/a11y.test.tsx"
+			],
+			"linter": {
+				"rules": {
+					"style": {
+						"useNamingConvention": "off"
+					}
+				}
+			}
+		}
+	]
+}

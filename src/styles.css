@@ -1,0 +1,1139 @@
+/*
+ * Theme: every colour is a variable. Override them on any ancestor to brand
+ * the charts. Teeth and NTS boxes stay white ("paper") in every theme, so the
+ * NTS red/blue keep their meaning and contrast.
+ */
+:root {
+	--odp-tooth: #ffffff; /* tooth fill */
+	--odp-stroke: #8a98be; /* tooth outline (always on white), as in react-odontogram */
+	/* --odp-stroke-width: fixed tooth stroke; default follows the size on screen. */
+	--odp-detail: #b8c0da; /* fine anatomy lines */
+	--odp-red: #dc2626; /* NTS: bad state / to treat (fixed by the standard) */
+	--odp-blue: #2563eb; /* NTS: good state / done (fixed by the standard) */
+	--odp-selected: #c6ccf8; /* selected zone, as in react-odontogram */
+	--odp-hover: #c6ccf8; /* zone under the pointer */
+	--odp-suppuration: #d97706;
+	/* UI */
+	--odp-bg: #f7f9fb; /* page / app background (cool grey) */
+	--odp-surface: #ffffff; /* cards, inputs, floating panels */
+	--odp-text: #1f2933; /* main text, numbers, chart lines */
+	--odp-text-muted: #52606d; /* secondary text, field labels */
+	--odp-border: #e1e7ec; /* dividers, NTS boxes, panel borders */
+	--odp-input-border: #7b8794; /* form controls (≥ 3:1 on the surface) */
+	--odp-row-alt: #f3f6f9; /* zebra rows */
+	--odp-line: #cbd5e1; /* occlusal plane, 5 mm grid */
+	--odp-line-soft: #e5e7eb; /* 1 mm grid */
+	--odp-primary: #0f6e8c; /* clinical teal: actions, focus, selection */
+	--odp-primary-hover: #0b5a73;
+	--odp-primary-active: #094a5e;
+	--odp-primary-soft: #e7f2f6; /* selected / active backgrounds */
+	--odp-on-primary: #ffffff; /* text on primary */
+	--odp-success: #2e7d5b;
+	--odp-success-soft: #e8f5ee;
+	--odp-warning: #b7791f; /* borders and icons; text uses --odp-warning-text */
+	--odp-warning-text: #8a5a12; /* #b7791f is only 3.4:1 on white */
+	--odp-warning-soft: #fdf6e7;
+	--odp-danger: #c53030; /* UI errors and destructive actions */
+	--odp-danger-soft: #fdeded;
+	--odp-info: #2b6cb0;
+	--odp-info-soft: #ebf4fc;
+	--odp-invalid-bg: #fdeded; /* invalid inputs */
+	--odp-pocket-fill: rgb(37 99 235 / 0.15);
+	--odp-plaque: #1e3a8a;
+	--odp-font: "Inter", "Source Sans 3", "IBM Plex Sans", system-ui,
+		-apple-system, "Segoe UI", sans-serif;
+	--odp-radius: 8px;
+	--odp-radius-sm: 6px;
+	--odp-shadow: 0 1px 2px rgb(16 42 67 / 0.06), 0 8px 24px rgb(16 42 67 / 0.1);
+	--odp-control-height: 2.5rem; /* 40 px: comfortable targets */
+	--odp-transition: 150ms ease;
+}
+
+.odp-theme-dark {
+	--odp-bg: #0f1720;
+	--odp-surface: #16202a;
+	--odp-text: #e4e9ee;
+	--odp-text-muted: #a3b1be;
+	--odp-border: #2c3a47;
+	--odp-input-border: #6b7c8c;
+	--odp-row-alt: #1a2530;
+	--odp-line: #475569;
+	--odp-line-soft: #1e293b;
+	--odp-primary: #4fb3d1;
+	--odp-primary-hover: #6cc3dd;
+	--odp-primary-active: #8ad0e5;
+	--odp-primary-soft: #13303c;
+	--odp-on-primary: #0b1a21;
+	--odp-success: #5cc08f;
+	--odp-success-soft: #12302a;
+	--odp-warning: #e0a845;
+	--odp-warning-text: #e0a845;
+	--odp-warning-soft: #33270f;
+	--odp-danger: #f07a7a;
+	--odp-danger-soft: #3a1a1a;
+	--odp-info: #6ba6e8;
+	--odp-info-soft: #14263a;
+	--odp-invalid-bg: #3a1a1a;
+	--odp-pocket-fill: rgb(96 165 250 / 0.22);
+	--odp-plaque: #93c5fd;
+	color-scheme: dark;
+}
+
+@media (prefers-color-scheme: dark) {
+	.odp-theme-auto {
+		--odp-bg: #0f1720;
+		--odp-surface: #16202a;
+		--odp-text: #e4e9ee;
+		--odp-text-muted: #a3b1be;
+		--odp-border: #2c3a47;
+		--odp-input-border: #6b7c8c;
+		--odp-row-alt: #1a2530;
+		--odp-line: #475569;
+		--odp-line-soft: #1e293b;
+		--odp-primary: #4fb3d1;
+		--odp-primary-hover: #6cc3dd;
+		--odp-primary-active: #8ad0e5;
+		--odp-primary-soft: #13303c;
+		--odp-on-primary: #0b1a21;
+		--odp-success: #5cc08f;
+		--odp-success-soft: #12302a;
+		--odp-warning: #e0a845;
+		--odp-warning-text: #e0a845;
+		--odp-warning-soft: #33270f;
+		--odp-danger: #f07a7a;
+		--odp-danger-soft: #3a1a1a;
+		--odp-info: #6ba6e8;
+		--odp-info-soft: #14263a;
+		--odp-invalid-bg: #3a1a1a;
+		--odp-pocket-fill: rgb(96 165 250 / 0.22);
+		--odp-plaque: #93c5fd;
+		color-scheme: dark;
+	}
+}
+
+/* Tooth */
+.odp-tooth {
+	overflow: visible;
+}
+
+.odp-crown,
+.odp-root,
+.odp-outline,
+.odp-surface {
+	stroke: var(--odp-stroke);
+	stroke-width: var(--odp-stroke-width, var(--odp-auto-stroke, 1.25px));
+	stroke-linejoin: round;
+	stroke-linecap: round;
+	vector-effect: non-scaling-stroke;
+}
+
+.odp-crown,
+.odp-root,
+.odp-surface {
+	fill: var(--odp-tooth);
+}
+
+.odp-surface {
+	stroke-width: calc(
+		var(--odp-stroke-width, var(--odp-auto-stroke, 1.25px)) *
+		0.6
+	);
+}
+
+.odp-outline {
+	fill: none;
+}
+
+.odp-detail {
+	fill: none;
+	stroke: var(--odp-detail);
+	stroke-width: calc(
+		var(--odp-stroke-width, var(--odp-auto-stroke, 1.25px)) *
+		0.6
+	);
+	stroke-linecap: round;
+	vector-effect: non-scaling-stroke;
+}
+
+.odp-outline,
+.odp-detail {
+	pointer-events: none;
+}
+
+.odp-brush [data-zone] {
+	cursor: crosshair;
+}
+
+.odp-select [data-zone] {
+	cursor: pointer;
+}
+
+[data-zone][data-selected] {
+	fill: var(--odp-selected);
+}
+
+/* Highlight the zone under the pointer; both root paths light up together. */
+.odp-brush [data-zone]:not([data-selected]):hover,
+.odp-select [data-zone]:not([data-selected]):hover,
+.odp-brush:has(.odp-root:hover) .odp-root,
+.odp-select:has(.odp-root:hover) .odp-root:not([data-selected]) {
+	fill: var(--odp-hover);
+}
+
+.odp-mark {
+	fill: var(--odp-red);
+	stroke: var(--odp-tooth);
+	stroke-width: 1px;
+	vector-effect: non-scaling-stroke;
+}
+
+.odp-brush .odp-mark {
+	cursor: pointer;
+}
+
+/* The browser's focus ring scales with the SVG into a thick black frame. */
+.odp-tooth :focus {
+	outline: none;
+}
+
+.odp-brush [data-zone]:focus-visible,
+.odp-select [data-zone]:focus-visible,
+.odp-mark:focus-visible {
+	outline: none;
+	stroke: var(--odp-blue);
+	stroke-width: 2px;
+}
+
+/* Odontogram */
+.odp-odontogram {
+	display: block;
+	width: 100%;
+	height: auto;
+	font-family: system-ui, sans-serif;
+}
+
+.odp-midline,
+.odp-occlusal-plane {
+	vector-effect: non-scaling-stroke;
+}
+
+.odp-midline {
+	stroke: var(--odp-text);
+	stroke-width: 2px;
+}
+
+.odp-occlusal-plane {
+	stroke: var(--odp-line);
+	stroke-width: 1px;
+}
+
+.odp-box {
+	fill: var(--odp-tooth);
+	stroke: var(--odp-border);
+	stroke-width: 1px;
+	vector-effect: non-scaling-stroke;
+}
+
+.odp-box-text,
+.odp-number {
+	text-anchor: middle;
+	dominant-baseline: central;
+}
+
+.odp-box-text {
+	fill: var(--odp-blue);
+	font-size: 3px;
+	font-weight: 600;
+}
+
+.odp-number {
+	fill: var(--odp-text);
+	font-size: 3.2px;
+	font-weight: 700;
+}
+
+/*
+ * Controls shared by the picker and hosts: .odp-btn (+ -primary, -secondary,
+ * -danger), .odp-icon-btn, .odp-input. States: hover, active, focus-visible,
+ * disabled, aria-invalid (error) and aria-busy (loading).
+ */
+.odp-btn,
+.odp-icon-btn,
+.odp-input,
+.odp-fselect-button,
+.odp-seg span,
+.odp-perio-input,
+.odp-perio-toggle {
+	transition: background-color var(--odp-transition), border-color
+		var(--odp-transition), color var(--odp-transition), box-shadow
+		var(--odp-transition);
+}
+
+.odp-btn {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 0.5rem;
+	min-height: var(--odp-control-height);
+	padding: 0 1rem;
+	border: 1px solid transparent;
+	border-radius: var(--odp-radius-sm);
+	font: 600 0.9375rem / 1.2 var(--odp-font);
+	cursor: pointer;
+}
+
+.odp-btn-primary {
+	background: var(--odp-primary);
+	color: var(--odp-on-primary);
+}
+
+.odp-btn-primary:hover {
+	background: var(--odp-primary-hover);
+}
+
+.odp-btn-primary:active {
+	background: var(--odp-primary-active);
+}
+
+.odp-btn-secondary {
+	border-color: var(--odp-primary);
+	background: var(--odp-surface);
+	color: var(--odp-primary);
+}
+
+.odp-btn-secondary:hover {
+	background: var(--odp-primary-soft);
+}
+
+.odp-btn-danger {
+	border-color: var(--odp-danger);
+	background: var(--odp-surface);
+	color: var(--odp-danger);
+}
+
+.odp-btn-danger:hover {
+	background: var(--odp-danger-soft);
+}
+
+.odp-btn-danger:active {
+	background: var(--odp-danger);
+	color: var(--odp-surface);
+}
+
+.odp-btn:disabled,
+.odp-btn[aria-disabled="true"] {
+	opacity: 0.5;
+	cursor: not-allowed;
+	pointer-events: none;
+}
+
+/* Loading: keeps its width, hides the label, shows a spinner. */
+.odp-btn[aria-busy="true"] {
+	position: relative;
+	color: transparent;
+	pointer-events: none;
+}
+
+.odp-btn[aria-busy="true"]::after {
+	position: absolute;
+	width: 1rem;
+	height: 1rem;
+	border: 2px solid var(--odp-on-primary);
+	border-right-color: transparent;
+	border-radius: 50%;
+	content: "";
+	animation: odp-spin 0.7s linear infinite;
+}
+
+.odp-btn-secondary[aria-busy="true"]::after {
+	border-color: var(--odp-primary);
+	border-right-color: transparent;
+}
+
+.odp-btn-danger[aria-busy="true"]::after {
+	border-color: var(--odp-danger);
+	border-right-color: transparent;
+}
+
+@keyframes odp-spin {
+	to {
+		transform: rotate(1turn);
+	}
+}
+
+.odp-icon-btn {
+	display: inline-grid;
+	place-items: center;
+	width: var(--odp-control-height);
+	height: var(--odp-control-height);
+	padding: 0;
+	border: 0;
+	border-radius: var(--odp-radius-sm);
+	background: none;
+	color: var(--odp-text-muted);
+	font-size: 1.25rem;
+	line-height: 1;
+	cursor: pointer;
+}
+
+.odp-icon-btn:hover {
+	background: var(--odp-row-alt);
+	color: var(--odp-text);
+}
+
+.odp-input {
+	min-height: var(--odp-control-height);
+	box-sizing: border-box;
+	padding: 0 0.75rem;
+	border: 1px solid var(--odp-input-border);
+	border-radius: var(--odp-radius-sm);
+	background: var(--odp-surface);
+	color: var(--odp-text);
+	font: 0.9375rem / 1.5 var(--odp-font);
+	font-variant-numeric: tabular-nums;
+}
+
+.odp-input:hover {
+	border-color: var(--odp-text-muted);
+}
+
+.odp-input::placeholder {
+	color: var(--odp-text-muted);
+}
+
+.odp-input[aria-invalid="true"] {
+	border-color: var(--odp-danger);
+	background: var(--odp-invalid-bg);
+}
+
+.odp-input:disabled {
+	background: var(--odp-row-alt);
+	cursor: not-allowed;
+}
+
+.odp-btn:focus-visible,
+.odp-icon-btn:focus-visible,
+.odp-input:focus-visible,
+.odp-picker :focus-visible {
+	outline: 2px solid var(--odp-primary);
+	outline-offset: 2px;
+}
+
+/* Floating finding picker (Odontogram with onChange). */
+.odp-odontogram-wrap {
+	position: relative;
+}
+
+.odp-picker {
+	position: absolute;
+	inset: auto; /* <dialog> defaults to centred */
+	z-index: 10;
+	width: 20rem;
+	max-width: 100%;
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+	border: 1px solid var(--odp-border);
+	border-radius: var(--odp-radius);
+	background: var(--odp-surface);
+	color: var(--odp-text);
+	box-shadow: var(--odp-shadow);
+	font: 0.9375rem / 1.5 var(--odp-font);
+}
+
+.odp-picker-head {
+	display: flex;
+	align-items: center;
+	gap: 0.75rem;
+	padding: 0.75rem 0.5rem 0.75rem 1rem;
+	border-bottom: 1px solid var(--odp-border);
+}
+
+.odp-picker-tooth {
+	display: grid;
+	place-items: center;
+	min-width: 2.5rem;
+	height: 2.5rem;
+	border-radius: var(--odp-radius-sm);
+	background: var(--odp-primary-soft);
+	color: var(--odp-primary);
+	font-weight: 600;
+	font-variant-numeric: tabular-nums;
+}
+
+.odp-picker-title {
+	display: flex;
+	flex: 1;
+	flex-direction: column;
+	line-height: 1.3;
+}
+
+.odp-picker-title strong {
+	font-weight: 600;
+}
+
+.odp-picker-title small {
+	color: var(--odp-text-muted);
+	font-size: 0.8125rem;
+}
+
+.odp-picker-title small::first-letter {
+	text-transform: uppercase;
+}
+
+.odp-picker-body {
+	display: flex;
+	flex-direction: column;
+	gap: 1rem;
+	padding: 1rem;
+}
+
+.odp-picker-field {
+	display: flex;
+	flex-direction: column;
+	gap: 0.25rem;
+	min-width: 0;
+	margin: 0;
+	padding: 0;
+	border: 0;
+}
+
+.odp-picker-field > span:first-child,
+.odp-picker-field > label:first-child,
+.odp-picker-field > legend,
+.odp-picker-saved h3 {
+	margin: 0 0 0.25rem;
+	padding: 0;
+	color: var(--odp-text-muted);
+	font-size: 0.8125rem;
+	font-weight: 600;
+	line-height: 1.4;
+}
+
+.odp-picker-error {
+	display: flex;
+	gap: 0.5rem;
+	align-items: flex-start;
+	margin: 0;
+	padding: 0.5rem 0.75rem;
+	border: 1px solid var(--odp-danger);
+	border-radius: var(--odp-radius-sm);
+	background: var(--odp-danger-soft);
+	color: var(--odp-danger);
+	font-size: 0.875rem;
+}
+
+/* Icon + text: the colour is never the only signal. */
+.odp-picker-error::before {
+	display: grid;
+	flex-shrink: 0;
+	place-items: center;
+	width: 1.125rem;
+	height: 1.125rem;
+	margin-top: 0.125rem;
+	border-radius: 50%;
+	background: var(--odp-danger);
+	color: var(--odp-surface);
+	font-size: 0.75rem;
+	font-weight: 700;
+	content: "!";
+}
+
+.odp-picker-saved {
+	padding: 0.75rem 1rem 1rem;
+	border-top: 1px solid var(--odp-border);
+	border-radius: 0 0 var(--odp-radius) var(--odp-radius);
+	background: var(--odp-row-alt);
+}
+
+.odp-picker-saved ul {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.odp-picker-saved li {
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
+	padding: 0.25rem 0;
+}
+
+.odp-picker-saved li + li {
+	border-top: 1px solid var(--odp-border);
+}
+
+.odp-picker-saved li > span:not(.odp-icon) {
+	flex: 1;
+	font-size: 0.875rem;
+}
+
+/* Finding dropdown with symbols. */
+.odp-fselect {
+	position: relative;
+}
+
+.odp-fselect-button,
+.odp-fselect-list [role="option"] {
+	display: flex;
+	align-items: center;
+	gap: 0.625rem;
+	text-align: left;
+}
+
+.odp-fselect-button {
+	min-height: var(--odp-control-height);
+	padding: 0.25rem 2rem 0.25rem 0.5rem;
+	border: 1px solid var(--odp-input-border);
+	border-radius: var(--odp-radius-sm);
+	background: var(--odp-surface)
+		url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='%2352606d' stroke-width='1.5'/%3E%3C/svg%3E")
+		no-repeat right 0.75rem center;
+	color: var(--odp-text);
+	font: inherit;
+	cursor: pointer;
+}
+
+.odp-fselect-button:hover {
+	border-color: var(--odp-text-muted);
+}
+
+.odp-fselect-button[aria-expanded="true"] {
+	border-color: var(--odp-primary);
+}
+
+.odp-fselect-pop {
+	position: absolute;
+	top: 100%;
+	right: 0;
+	left: 0;
+	z-index: 1;
+	margin-top: 0.25rem;
+	border: 1px solid var(--odp-border);
+	border-radius: var(--odp-radius-sm);
+	background: var(--odp-surface);
+	box-shadow: var(--odp-shadow);
+}
+
+.odp-fselect-search {
+	box-sizing: border-box;
+	width: calc(100% - 1rem);
+	margin: 0.5rem 0.5rem 0.25rem;
+}
+
+.odp-fselect-list {
+	max-height: 18rem;
+	padding: 0.25rem 0;
+	overflow-y: auto;
+}
+
+.odp-fselect-empty {
+	padding: 0.5rem 0.75rem;
+	color: var(--odp-text-muted);
+}
+
+.odp-picker .odp-fselect-list:focus-visible {
+	outline: none; /* the active option shows the focus */
+}
+
+.odp-fselect-group {
+	padding: 0.5rem 0.75rem 0.25rem;
+	color: var(--odp-text-muted);
+	font-size: 0.75rem;
+	font-weight: 600;
+}
+
+.odp-fselect-list [role="option"] {
+	min-height: 2.25rem;
+	padding: 0.25rem 0.75rem;
+	cursor: pointer;
+}
+
+.odp-fselect-list [data-active] {
+	background: var(--odp-primary-soft);
+	box-shadow: inset 3px 0 0 var(--odp-primary);
+}
+
+.odp-fselect-list [aria-selected="true"] {
+	font-weight: 600;
+}
+
+.odp-fselect-list [aria-selected="true"]::after {
+	margin-left: auto;
+	color: var(--odp-primary);
+	content: "✓";
+}
+
+/* Finding symbol (FindingIcon). */
+.odp-icon {
+	display: inline-grid;
+	flex-shrink: 0;
+	place-items: center;
+}
+
+.odp-icon > svg {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+.odp-icon-sigla {
+	box-sizing: border-box;
+	border: 1px solid var(--odp-border);
+	border-radius: 4px;
+	background: var(--odp-tooth);
+	color: var(--odp-blue);
+	font-size: 0.625rem;
+	font-weight: 700;
+	line-height: 1;
+}
+
+.odp-icon-sigla.odp-f-bad {
+	color: var(--odp-red);
+}
+
+/* Segmented radios (sigla, state, direction). */
+.odp-seg > div {
+	display: flex;
+	overflow: hidden;
+	border: 1px solid var(--odp-input-border);
+	border-radius: var(--odp-radius-sm);
+}
+
+.odp-seg label {
+	position: relative;
+	flex: 1;
+}
+
+.odp-seg label + label {
+	border-left: 1px solid var(--odp-input-border);
+}
+
+.odp-seg input {
+	position: absolute;
+	inset: 0;
+	margin: 0;
+	opacity: 0;
+	cursor: pointer;
+}
+
+.odp-seg span {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 0.375rem;
+	min-height: calc(var(--odp-control-height) - 2px);
+	padding: 0 0.5rem;
+	font-size: 0.875rem;
+	font-variant-numeric: tabular-nums;
+}
+
+.odp-seg label:hover span {
+	background: var(--odp-row-alt);
+}
+
+.odp-seg input:checked + span {
+	background: var(--odp-primary-soft);
+	color: var(--odp-primary);
+	font-weight: 600;
+	box-shadow: inset 0 -2px 0 var(--odp-primary);
+}
+
+.odp-picker .odp-seg input:focus-visible + span {
+	outline: 2px solid var(--odp-primary);
+	outline-offset: -3px;
+}
+
+/* Sigla + meaning, two per row. */
+.odp-seg-grid > div {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+}
+
+.odp-seg-grid label + label {
+	border-left: none;
+}
+
+.odp-seg-grid label {
+	border-top: 1px solid var(--odp-input-border);
+}
+
+.odp-seg-grid label:nth-child(-n + 2) {
+	border-top: none;
+}
+
+.odp-seg-grid label:nth-child(even) {
+	border-left: 1px solid var(--odp-input-border);
+}
+
+.odp-seg-grid span {
+	flex-direction: column;
+	align-items: flex-start;
+	gap: 0;
+	padding: 0.25rem 0.5rem;
+	text-align: left;
+}
+
+.odp-seg-grid small {
+	color: var(--odp-text-muted);
+	font-size: 0.75rem;
+	font-weight: 400;
+	line-height: 1.25;
+}
+
+/* NTS dots next to the words "Malo" / "Bueno". */
+.odp-seg-bad span::before,
+.odp-seg-good span::before {
+	width: 0.625rem;
+	height: 0.625rem;
+	border-radius: 50%;
+	background: var(--odp-red);
+	content: "";
+}
+
+.odp-seg-good span::before {
+	background: var(--odp-blue);
+}
+
+.odp-picker-add {
+	width: 100%;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.odp-btn,
+	.odp-icon-btn,
+	.odp-input,
+	.odp-fselect-button,
+	.odp-seg span,
+	.odp-perio-input,
+	.odp-perio-toggle {
+		transition: none;
+	}
+
+	.odp-btn[aria-busy="true"]::after {
+		animation-duration: 2s;
+	}
+}
+
+/* Findings: blue = good / done, red = bad / to treat (NTS). */
+.odp-f {
+	color: var(--odp-blue);
+	fill: none;
+	stroke: currentColor;
+	stroke-width: calc(
+		var(--odp-stroke-width, var(--odp-auto-stroke, 1.25px)) *
+		1.4
+	);
+	stroke-linecap: round;
+	stroke-linejoin: round;
+	pointer-events: none;
+}
+
+.odp-f path,
+.odp-f polygon {
+	vector-effect: non-scaling-stroke;
+}
+
+.odp-f-bad {
+	color: var(--odp-red);
+}
+
+.odp-f .odp-f-thick {
+	stroke-width: calc(
+		var(--odp-stroke-width, var(--odp-auto-stroke, 1.25px)) *
+		2.2
+	);
+}
+
+.odp-f .odp-f-fill {
+	fill: currentColor;
+	stroke: none;
+}
+
+.odp-box-good {
+	fill: var(--odp-blue);
+}
+
+.odp-box-bad {
+	fill: var(--odp-red);
+}
+
+.odp-selected .odp-box {
+	stroke: var(--odp-blue);
+	stroke-width: 2px;
+}
+
+/* Periodontogram */
+.odp-perio {
+	--odp-perio-label: 6.5rem;
+	min-width: 60rem;
+	/* Dense clinical grid (16 teeth x 3 sites per row): smaller than the 15 px UI text. */
+	font-family: var(--odp-font);
+	font-size: 0.8125rem;
+	line-height: 1.5;
+	color: var(--odp-text);
+	font-variant-numeric: tabular-nums;
+}
+
+.odp-perio section + section {
+	margin-top: 1.5rem;
+}
+
+/* Zebra rows (the tooth strip keeps its own background). */
+.odp-perio
+	section
+	> .odp-perio-row:nth-child(even):not(:has(.odp-perio-strip)) {
+	background: var(--odp-row-alt);
+}
+
+/* Same columns as the teeth strip: label, 8 teeth, midline gap, 8 teeth. */
+.odp-perio-row {
+	display: grid;
+	grid-template-columns: var(--odp-perio-label) repeat(8, 13fr) 3fr repeat(
+			8,
+			13fr
+		);
+	align-items: center;
+}
+
+.odp-perio-label {
+	grid-column: 1;
+	padding-right: 0.75rem;
+	color: var(--odp-text-muted);
+	text-align: right;
+	font-weight: 600;
+}
+
+.odp-perio-cell {
+	display: flex;
+	gap: 1px;
+	justify-content: center;
+	padding: 1px;
+}
+
+.odp-perio-absent {
+	opacity: 0.3;
+}
+
+.odp-perio-fdi {
+	text-align: center;
+}
+
+.odp-perio-strip-cell {
+	grid-column: 2 / -1;
+}
+
+.odp-perio-strip {
+	display: block;
+	width: 100%;
+	height: auto;
+}
+
+.odp-perio-input {
+	width: 100%;
+	min-width: 0;
+	padding: 2px 0;
+	border: 1px solid var(--odp-input-border);
+	border-radius: 4px;
+	background: var(--odp-surface);
+	color: var(--odp-text);
+	font: inherit;
+	text-align: center;
+}
+
+.odp-perio-input:hover:not(:disabled) {
+	border-color: var(--odp-text-muted);
+}
+
+.odp-perio-input:focus-visible,
+.odp-perio-toggle:focus-visible {
+	position: relative;
+	z-index: 1;
+	outline: 2px solid var(--odp-primary);
+	outline-offset: 1px;
+}
+
+.odp-perio-input:disabled {
+	border-color: var(--odp-border);
+	background: transparent;
+}
+
+/* Error: border + tint + aria-invalid (read out); not colour alone. */
+.odp-perio-input[aria-invalid] {
+	border-color: var(--odp-danger);
+	border-width: 2px;
+	background: var(--odp-invalid-bg);
+	color: var(--odp-danger);
+	font-weight: 600;
+}
+
+.odp-perio-toggle {
+	flex: 1;
+	height: 1rem;
+	padding: 0;
+	border: 1px solid var(--odp-input-border);
+	border-radius: 3px;
+	background: var(--odp-surface);
+	cursor: pointer;
+}
+
+.odp-perio-toggle:hover:not(:disabled) {
+	border-color: var(--odp-text);
+}
+
+.odp-perio-toggle:disabled {
+	border-color: var(--odp-border);
+	cursor: default;
+}
+
+.odp-perio-bleeding[aria-pressed="true"] {
+	background: var(--odp-red);
+}
+
+.odp-perio-plaque[aria-pressed="true"] {
+	background: var(--odp-plaque);
+}
+
+.odp-perio-suppuration[aria-pressed="true"] {
+	background: var(--odp-suppuration);
+}
+
+.odp-perio-implant[aria-pressed="true"],
+.odp-perio-missing[aria-pressed="true"] {
+	background: var(--odp-text);
+}
+
+.odp-perio-grid,
+.odp-perio-cej,
+.odp-perio-margin,
+.odp-perio-pocket {
+	vector-effect: non-scaling-stroke;
+	fill: none;
+}
+
+.odp-perio-grid {
+	stroke: var(--odp-line-soft);
+	stroke-width: 0.5px;
+}
+
+.odp-perio-grid-5 {
+	stroke: var(--odp-line);
+}
+
+.odp-perio-cej {
+	stroke: var(--odp-text);
+	stroke-width: 0.75px;
+	stroke-dasharray: 3 2;
+}
+
+.odp-perio-pocket-area {
+	fill: var(--odp-pocket-fill);
+}
+
+.odp-perio-margin {
+	stroke: var(--odp-red);
+	stroke-width: 1.5px;
+}
+
+.odp-perio-pocket {
+	stroke: var(--odp-blue);
+	stroke-width: 1.5px;
+}
+
+.odp-perio-summary {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: baseline;
+	gap: 0.5rem 1.5rem;
+	margin: 1.5rem 0 0;
+	padding: 0.75rem 1rem;
+	border: 1px solid var(--odp-border);
+	border-radius: var(--odp-radius);
+	background: var(--odp-surface);
+	font-size: 0.875rem;
+}
+
+.odp-perio-summary dt {
+	color: var(--odp-text-muted);
+	font-weight: 600;
+}
+
+.odp-perio-summary dd {
+	margin: 0 0 0 -1rem;
+	font-weight: 600;
+	font-variant-numeric: tabular-nums;
+}
+
+/*
+ * Print: light theme, exact colours, A4-friendly sizes, no splits inside an
+ * arch. Scoped to the charts; the page size lives in the optional print.css.
+ */
+@media print {
+	.odp-picker {
+		display: none;
+	}
+
+	.odp-odontogram,
+	.odp-perio {
+		--odp-surface: #ffffff;
+		--odp-text: #1f2933;
+		--odp-text-muted: #52606d;
+		--odp-border: #9ca3af; /* boxes must show on paper */
+		--odp-input-border: #7b8794;
+		--odp-row-alt: #f3f6f9;
+		--odp-line: #cbd5e1;
+		--odp-line-soft: #e5e7eb;
+		--odp-primary: #0f6e8c;
+		--odp-primary-hover: #0b5a73;
+		--odp-primary-active: #094a5e;
+		--odp-primary-soft: #e7f2f6;
+		--odp-on-primary: #ffffff;
+		--odp-success: #2e7d5b;
+		--odp-success-soft: #e8f5ee;
+		--odp-warning: #b7791f;
+		--odp-warning-text: #8a5a12;
+		--odp-warning-soft: #fdf6e7;
+		--odp-danger: #c53030;
+		--odp-danger-soft: #fdeded;
+		--odp-info: #2b6cb0;
+		--odp-info-soft: #ebf4fc;
+		--odp-invalid-bg: #fdeded;
+		--odp-pocket-fill: rgb(37 99 235 / 0.15);
+		--odp-plaque: #1e3a8a;
+		print-color-adjust: exact;
+		-webkit-print-color-adjust: exact;
+	}
+
+	.odp-odontogram {
+		break-inside: avoid;
+	}
+
+	.odp-perio {
+		--odp-perio-label: 4.5rem;
+		min-width: 0;
+		font-size: 7pt;
+	}
+
+	.odp-perio section,
+	.odp-perio-summary {
+		break-inside: avoid;
+	}
+
+	.odp-perio-input {
+		padding: 0;
+		border-radius: 0;
+	}
+
+	.odp-perio-toggle {
+		height: 2.5mm;
+		border-radius: 0;
+	}
+
+	[data-zone][data-selected] {
+		fill: var(--odp-tooth);
+	}
+
+	.odp-selected .odp-box {
+		stroke: var(--odp-border);
+		stroke-width: 1px;
+	}
+}

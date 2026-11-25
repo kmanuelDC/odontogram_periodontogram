@@ -1,0 +1,11 @@
+/*
+ * Optional A4 page setup for printing the charts (import
+ * "odontogram-periodontogram-core/print.css"). @page applies to the whole
+ * document, so it is not part of the main stylesheet.
+ */
+@media print {
+	@page {
+		size: A4 portrait;
+		margin: 10mm;
+	}
+}
