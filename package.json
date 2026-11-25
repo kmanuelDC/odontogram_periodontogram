@@ -4,6 +4,14 @@
 	"version": "0.1.0",
 	"author": "Manuel Díaz Calua",
 	"license": "MIT",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/kmanuelDC/odontogram_periodontogram.git"
+	},
+	"homepage": "https://github.com/kmanuelDC/odontogram_periodontogram#readme",
+	"bugs": {
+		"url": "https://github.com/kmanuelDC/odontogram_periodontogram/issues"
+	},
 	"keywords": [
 		"odontogram",
 		"periodontogram",
