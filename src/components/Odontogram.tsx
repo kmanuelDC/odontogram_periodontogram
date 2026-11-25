@@ -138,6 +138,10 @@ function chartPath(
 		const { x, y } = a.label;
 		return { d: `M${x} ${y - 3.4}L${x + 3.4} ${y + 2.2}H${x - 3.4}Z` };
 	}
+	if (kind === "numberRing") {
+		const { x, y } = a.label;
+		return { d: `M${x - 3} ${y}a3 2.6 0 1 0 6 0a3 2.6 0 1 0 -6 0` };
+	}
 	if (!b) {
 		return null; // not a span, or the other tooth is not on this chart
 	}
@@ -177,7 +181,7 @@ function chartPath(
 		}
 		case "edentulous":
 			return { d: `M${a.x} ${crownLine(a)}H${b.x}` };
-		case "gemination": {
+		case "fusion": {
 			// Two rings around the numbers that overlap between them.
 			const rx = Math.abs(b.x - a.x) / 2 + 1.5;
 			const ring = (p: Point) =>

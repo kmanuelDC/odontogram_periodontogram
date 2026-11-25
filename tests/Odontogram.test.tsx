@@ -117,10 +117,11 @@ describe("findings", () => {
 		["removableProsthesis", { to: 26 }],
 		["totalProsthesis", { to: 28 }],
 		["edentulous", { to: 28 }],
-		["gemination", { to: 22 }],
+		["fusion", { to: 22 }],
 		["transposition", { to: 24 }],
 		["supernumerary", { to: 22 }],
 		["peg", {}],
+		["gemination", {}],
 	])("draws %s once on the chart", (code, extra) => {
 		const { container } = render(
 			<Odontogram
@@ -131,6 +132,25 @@ describe("findings", () => {
 		const g = container.querySelectorAll(`[data-finding="${code}"]`);
 		expect(g).toHaveLength(1);
 		expect(g[0].querySelector("path")?.getAttribute("d")).not.toContain("NaN");
+	});
+
+	it("draws a post-core and a root fracture on the side view", () => {
+		const { container } = render(
+			<Odontogram
+				dentition="permanent"
+				value={{
+					11: [{ code: "postCore", state: "bad" }],
+					21: [{ code: "fracture", location: "root" }],
+				}}
+			/>,
+		);
+		const side = (fdi: number, code: string) =>
+			container.querySelector(
+				`svg[data-fdi="${fdi}"][data-view="lateral"] [data-finding="${code}"] path`,
+			);
+		expect(side(11, "postCore")?.getAttribute("d")).not.toContain("NaN");
+		expect(side(11, "postCore")?.parentElement).toHaveClass("odp-f-bad");
+		expect(side(21, "fracture")?.getAttribute("d")).not.toContain("NaN");
 	});
 
 	it("writes RR on the root, not in the box", () => {

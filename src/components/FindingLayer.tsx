@@ -85,12 +85,23 @@ function lateralShape(f: Finding, g: ToothGeometry) {
 				</text>
 			);
 		}
-		case "fracture":
+		case "fracture": {
+			const y = f.location === "root" ? lateral.apexY : lateral.edgeY;
+			const [from, to] = f.location === "root" ? [0.4, 0.7] : [0.35, 0.85];
+			return <path d={`M${x0} ${y * from}L${x1} ${y * to}`} />;
+		}
+		case "postCore": {
+			const cy = lateral.edgeY * 0.5;
+			const h = 1.2 * Math.sign(lateral.edgeY);
+			const [a, b] = lateral.rootAxes[0];
+			const tip = [a[0] + (b[0] - a[0]) * 0.7, a[1] + (b[1] - a[1]) * 0.7];
 			return (
 				<path
-					d={`M${x0} ${lateral.edgeY * 0.35}L${x1} ${lateral.edgeY * 0.85}`}
+					className="odp-f-thick"
+					d={`M-1.2 ${cy - 1.2}h2.4v2.4h-2.4ZM0 ${cy - h}L${a[0]} ${a[1]}L${tip[0]} ${tip[1]}`}
 				/>
 			);
+		}
 		default:
 			return null;
 	}

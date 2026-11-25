@@ -16,6 +16,25 @@ describe("catalogue", () => {
 		expect(def.kind).toBeTruthy();
 	});
 
+	it("lets a finding override a shared sigla meaning", () => {
+		expect(SIGLA_NAMES.D).toBe("Distalizado");
+		expect(FINDINGS.enamelDefect.siglaNames.D).toBe("Decoloración del esmalte");
+	});
+
+	it("records enamel defects on a surface", () => {
+		const v = addFinding({}, 17, {
+			code: "enamelDefect",
+			sigla: "HM",
+			surfaces: ["V"],
+		});
+		expect(describeFindings(v[17] ?? [])).toBe(
+			"Defecto de desarrollo del esmalte HM (V)",
+		);
+		expect(() => addFinding({}, 17, { code: "enamelDefect" })).toThrow(
+			RangeError,
+		);
+	});
+
 	it("explains every sigla", () => {
 		const siglas = Object.values(FINDINGS).flatMap(
 			(d) => ("siglas" in d ? d.siglas : []) as readonly string[],
@@ -64,6 +83,8 @@ describe("addFinding", () => {
 		["a bridge without its other end", 16, { code: "fixedProsthesis" }],
 		["a bridge to itself", 16, { code: "fixedProsthesis", to: 16 }],
 		["a bridge across arches", 16, { code: "fixedProsthesis", to: 46 }],
+		["a location outside a fracture", 16, { code: "crown", location: "root" }],
+		["an invalid location", 16, { code: "fracture", location: "apex" }],
 	])("rejects %s", (_, fdi, finding) => {
 		expect(() => addFinding({}, fdi as number, finding as Finding)).toThrow(
 			RangeError,
@@ -264,7 +285,8 @@ it("describes findings in Spanish for screen readers", () => {
 		describeFindings([
 			{ code: "caries", sigla: "CD", surfaces: ["M", "O"] },
 			{ code: "fixedProsthesis", to: 14 },
+			{ code: "fracture", location: "root" },
 			{ code: "unknown" as never },
 		]),
-	).toBe("Caries CD (M, O); Prótesis fija hasta 14");
+	).toBe("Caries CD (M, O); Prótesis fija hasta 14; Fractura en la raíz");
 });

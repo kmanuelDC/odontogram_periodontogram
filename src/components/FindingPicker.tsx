@@ -74,6 +74,7 @@ function buildFinding(
 		surface: Surface | undefined;
 		to: string;
 		direction: "mesial" | "distal";
+		location: "crown" | "root";
 	},
 ): Finding {
 	const d = FINDINGS[code];
@@ -86,6 +87,7 @@ function buildFinding(
 			: {}),
 		...(SPAN_KINDS.includes(d.kind) ? { to: Number(form.to) } : {}),
 		...(code === "migrated" ? { direction: form.direction } : {}),
+		...(d.kind === "fracture" ? { location: form.location } : {}),
 	};
 }
 
@@ -213,6 +215,7 @@ function PickerForm({
 	const [state, setState] = useState<FindingState>("bad");
 	const [to, setTo] = useState("");
 	const [direction, setDirection] = useState<"mesial" | "distal">("mesial");
+	const [location, setLocation] = useState<"crown" | "root">("crown");
 	const [error, setError] = useState("");
 	const def = FINDINGS[code];
 	const span = SPAN_KINDS.includes(def.kind);
@@ -231,6 +234,7 @@ function PickerForm({
 			surface,
 			to: end,
 			direction,
+			location,
 		});
 	const add = () => {
 		try {
@@ -265,7 +269,7 @@ function PickerForm({
 						s,
 						<Fragment key={s}>
 							<b>{s}</b>
-							<small>{SIGLA_NAMES[s]}</small>
+							<small>{siglaName(def, s)}</small>
 						</Fragment>,
 					])}
 					grid={true}
@@ -304,6 +308,18 @@ function PickerForm({
 						["distal", "Distal"],
 					]}
 					onChange={(d) => setDirection(d as "mesial" | "distal")}
+				/>
+			) : null}
+			{def.kind === "fracture" ? (
+				<Segmented
+					legend="Ubicación"
+					name={`${id}-loc`}
+					value={location}
+					options={[
+						["crown", "Corona"],
+						["root", "Raíz"],
+					]}
+					onChange={(l) => setLocation(l as "crown" | "root")}
 				/>
 			) : null}
 			<button
@@ -346,6 +362,10 @@ function offeredCodes(
 			: fits(chart, fdi, c, surface);
 	});
 }
+
+/** What a sigla means for this finding: its own override, else SIGLA_NAMES. */
+const siglaName = (def: FindingDef, s: string) =>
+	def.siglaNames?.[s] ?? SIGLA_NAMES[s];
 
 /** True when the finding, with defaults, passes the chart's clinical rules. */
 function fits(

@@ -1,7 +1,7 @@
 {
 	"name": "odontogram-periodontogram-core",
 	"description": "Odontogram (NTS/MINSA Peru) and periodontogram React components with anatomical SVG teeth.",
-	"version": "0.1.0",
+	"version": "0.2.0",
 	"author": "Manuel Díaz Calua",
 	"license": "MIT",
 	"repository": {

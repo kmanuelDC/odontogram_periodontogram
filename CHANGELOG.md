@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.2.0 — 2026-11-25
+
+### Añadido
+
+- Hallazgos NTS 188 que faltaban (41 en total): `postCore` (espigo-muñón, cuadrado en la corona unido a una línea en la raíz, según estado), `enamelDefect` (defecto de desarrollo del esmalte, en rojo sobre la cara: HP hipoplasia, HM hipomineralización, O opacidades, D decoloración, FLU fluorosis), `abnormalPosition` (posición anormal dentaria: M, D, V, P, L; azul), `deepFissures` (fosas y fisuras profundas: FFP; azul) y `fusion`.
+- Sigla `C` (carilla) en `restoration`.
+- `FindingDef.siglaNames`: significado propio de una sigla en un hallazgo, cuando difiere del de `SIGLA_NAMES` (la "D" del esmalte es decoloración, no distalizado).
+- `Finding.location` (`"crown"` o `"root"`, solo en `fracture`; por defecto corona): la fractura en la raíz se dibuja sobre la raíz. La ventana de hallazgos pide la ubicación y `describeFindings` la incluye ("Fractura en la raíz").
+
+### Cambiado (incompatible)
+
+- `gemination` es ahora **Geminación** de una sola pieza: un círculo alrededor del número, sin `to`. El dibujo de dos círculos entre piezas pasa al nuevo `fusion` (Fusión). Los datos guardados como `{ code: "gemination", to }` se siguen cargando, pero se dibujan como geminación de la pieza de origen: conviértelos a `fusion`.
+
 ## 0.1.0 — 2026-11-25
 
 Primera versión.

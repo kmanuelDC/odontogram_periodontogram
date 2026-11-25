@@ -26,7 +26,11 @@ export interface Finding {
 	to?: number;
 	/** Migration direction. Default: "mesial". */
 	direction?: "mesial" | "distal";
+	/** Where a fracture is. Default: "crown". */
+	location?: "crown" | "root";
 }
+
+const LOCATION_NAMES = { crown: "en la corona", root: "en la raíz" } as const;
 
 /** The whole chart: findings by FDI. */
 export type OdontogramValue = Readonly<
@@ -43,6 +47,18 @@ export const findingState = (f: Finding): FindingState =>
 export const findingSigla = (f: Finding): string | undefined =>
 	f.sigla ?? findingDef(f)?.siglas?.[0];
 
+function validateLocation(def: FindingDef, f: Finding): void {
+	if (f.location === undefined) {
+		return;
+	}
+	if (def.kind !== "fracture") {
+		throw new RangeError(`${def.name} no lleva ubicación`);
+	}
+	if (f.location !== "crown" && f.location !== "root") {
+		throw new RangeError(`${def.name}: ubicación no válida (${f.location})`);
+	}
+}
+
 /** Throws RangeError when the finding cannot be placed on this tooth. */
 export function validateFinding(fdi: number, f: Finding): void {
 	const def = findingDef(f);
@@ -55,6 +71,7 @@ export function validateFinding(fdi: number, f: Finding): void {
 	if (f.sigla && !def.siglas?.includes(f.sigla)) {
 		throw new RangeError(`La sigla ${f.sigla} no corresponde a ${def.name}`);
 	}
+	validateLocation(def, f);
 	if (SURFACE_KINDS.includes(def.kind)) {
 		const surfaces = f.surfaces ?? [];
 		if (surfaces.length === 0 || surfaces.some((s) => !SURFACES.includes(s))) {
@@ -237,7 +254,8 @@ export function describeFindings(findings: readonly Finding[]): string {
 			const surfaces = f.surfaces ?? [];
 			const where = surfaces.length > 0 ? ` (${surfaces.join(", ")})` : "";
 			const to = f.to ? ` hasta ${f.to}` : "";
-			return `${findingDef(f)?.name}${sigla ? ` ${sigla}` : ""}${where}${to}`;
+			const at = f.location ? ` ${LOCATION_NAMES[f.location]}` : "";
+			return `${findingDef(f)?.name}${sigla ? ` ${sigla}` : ""}${at}${where}${to}`;
 		})
 		.join("; ");
 }

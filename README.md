@@ -55,8 +55,9 @@ Si prefieres tu propio menú, no pases `onChange`: usa `selection` / `onSelectio
 | `state` | `"good"` (azul) o `"bad"` (rojo). Algunos hallazgos tienen color fijo. |
 | `sigla` | Una de las siglas del catálogo; por defecto la primera. Aparece en el casillero. |
 | `surfaces` | Caras `V`, `L`, `M`, `D`, `O` (caries, restauraciones, sellantes). |
-| `to` | Diente final de los hallazgos entre piezas: prótesis fija, removible o total, aparatos ortodónticos, edéntulo total, diastema, geminación/fusión, transposición y supernumerario. |
+| `to` | Diente final de los hallazgos entre piezas: prótesis fija, removible o total, aparatos ortodónticos, edéntulo total, diastema, fusión, transposición y supernumerario. |
 | `direction` | `"mesial"` o `"distal"` (migración). |
+| `location` | `"crown"` o `"root"` (fractura; por defecto corona). |
 
 `addFinding` valida y lanza `RangeError`, con el mensaje en español, si el hallazgo no corresponde: diente inválido, sigla ajena, caries sin caras, puente entre arcadas, o una regla clínica.
 
@@ -124,7 +125,7 @@ guardar(JSON.stringify(chart));
 
 - `PatientChart = { version: 1, odontogram, periodontogram, marks }`.
 - Los ausentes e implantes del odontograma se muestran bloqueados en el periodontograma. No se copian, así que nunca quedan desactualizados.
-- `parsePatientChart` acepta texto u objeto, lo valida completo y lanza `RangeError` con la ruta del error, por ejemplo `periodontogram 16: 16 V: PS must be 0–20 mm`.
+- `parsePatientChart` acepta texto u objeto, lo valida completo y lanza `RangeError` con la ruta del error, por ejemplo `Ficha del paciente no válida: periodontogram 16: 16 V: la PS debe estar entre 0 y 20 mm`.
 
 ## JavaScript sin TypeScript
 

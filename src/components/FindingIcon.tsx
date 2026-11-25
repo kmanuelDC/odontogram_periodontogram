@@ -26,7 +26,8 @@ const SPAN_PATHS: Record<string, string> = {
 	removableProsthesis: "M2 10H22M2 14H22",
 	totalProsthesis: "M2 10H22M2 14H22",
 	edentulous: "M2 12H22",
-	gemination:
+	numberRing: "M5 12a7 6 0 1 0 14 0a7 6 0 1 0 -14 0",
+	fusion:
 		"M2 12a6 5 0 1 0 12 0a6 5 0 1 0 -12 0M10 12a6 5 0 1 0 12 0a6 5 0 1 0 -12 0",
 	transposition:
 		"M4 12Q12 4 20 12M20 12l-3.5 -0.5M20 12l-1 -3.4M20 12Q12 20 4 12M4 12l3.5 0.5M4 12l1 3.4",

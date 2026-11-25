@@ -11,6 +11,7 @@ export type FindingKind =
 	| "crown" // outlines the crown (lateral) and the occlusal circle
 	| "cross" // X over the whole tooth
 	| "rootCanal" // line along each root
+	| "postCore" // square in the crown joined to a line along the root
 	| "implant"
 	| "extrusion"
 	| "intrusion"
@@ -25,7 +26,8 @@ export type FindingKind =
 	| "removableProsthesis" // two lines at apex level, spans to `to`
 	| "totalProsthesis" // two lines over the crowns, spans to `to`
 	| "edentulous" // one line over the crowns, spans to `to`
-	| "gemination" // two crossing rings around both numbers (`to`)
+	| "numberRing" // one ring around the tooth number
+	| "fusion" // two crossing rings around both numbers (`to`)
 	| "transposition" // two crossing curved arrows at the numbers (`to`)
 	| "supernumerary" // circled S between the apices of this tooth and `to`
 	| "peg" // triangle around the tooth number
@@ -39,6 +41,8 @@ export interface FindingDef {
 	siglas?: readonly string[];
 	/** Fixed colour: the finding is always good or always bad. */
 	state?: FindingState;
+	/** Meanings that differ from SIGLA_NAMES for this finding (e.g. "D"). */
+	siglaNames?: Readonly<Record<string, string>>;
 }
 
 /**
@@ -56,7 +60,7 @@ export const FINDINGS = {
 	restoration: {
 		name: "Restauración definitiva",
 		kind: "surface",
-		siglas: ["AM", "R", "IV", "IM", "IE"],
+		siglas: ["AM", "R", "IV", "IM", "IE", "C"],
 	},
 	temporaryRestoration: {
 		name: "Restauración temporal",
@@ -81,6 +85,7 @@ export const FINDINGS = {
 		kind: "rootCanal",
 		siglas: ["TC", "PC", "PP"],
 	},
+	postCore: { name: "Espigo-muñón", kind: "postCore" },
 	implant: { name: "Implante dental", kind: "implant", siglas: ["IMP"] },
 	missing: { name: "Diente ausente", kind: "cross", state: "good" },
 	extraction: { name: "Extracción indicada", kind: "cross", state: "bad" },
@@ -108,11 +113,8 @@ export const FINDINGS = {
 	},
 	totalProsthesis: { name: "Prótesis total", kind: "totalProsthesis" },
 	edentulous: { name: "Edéntulo total", kind: "edentulous", state: "good" },
-	gemination: {
-		name: "Geminación / fusión",
-		kind: "gemination",
-		state: "good",
-	},
+	gemination: { name: "Geminación", kind: "numberRing", state: "good" },
+	fusion: { name: "Fusión", kind: "fusion", state: "good" },
 	transposition: {
 		name: "Transposición",
 		kind: "transposition",
@@ -173,6 +175,26 @@ export const FINDINGS = {
 		siglas: ["M1", "M2", "M3"],
 		state: "good",
 	},
+	// NTS 188 / SIHCE: painted red on the affected surface, type in the box.
+	enamelDefect: {
+		name: "Defecto de desarrollo del esmalte",
+		kind: "surface",
+		siglas: ["HP", "HM", "O", "D", "FLU"],
+		state: "bad",
+		siglaNames: Object.fromEntries([["D", "Decoloración del esmalte"]]),
+	},
+	abnormalPosition: {
+		name: "Posición anormal dentaria",
+		kind: "sigla",
+		siglas: ["M", "D", "V", "P", "L"],
+		state: "good",
+	},
+	deepFissures: {
+		name: "Fosas y fisuras profundas",
+		kind: "sigla",
+		siglas: ["FFP"],
+		state: "good",
+	},
 } as const satisfies Record<string, FindingDef>;
 
 export type FindingCode = keyof typeof FINDINGS;
@@ -190,7 +212,7 @@ export const SPAN_KINDS: readonly FindingKind[] = [
 	"removableProsthesis",
 	"totalProsthesis",
 	"edentulous",
-	"gemination",
+	"fusion",
 	"transposition",
 	"supernumerary",
 ];
@@ -207,6 +229,7 @@ export const SIGLA_NAMES: Readonly<Record<string, string>> = Object.fromEntries(
 		["IV", "Ionómero de vidrio"],
 		["IM", "Incrustación metálica"],
 		["IE", "Incrustación estética"],
+		["C", "Carilla"],
 		["S", "Sellante"],
 		["CM", "Corona metálica"],
 		["CF", "Corona fenestrada"],
@@ -229,6 +252,16 @@ export const SIGLA_NAMES: Readonly<Record<string, string>> = Object.fromEntries(
 		["M1", "Movilidad grado 1"],
 		["M2", "Movilidad grado 2"],
 		["M3", "Movilidad grado 3"],
+		["O", "Opacidades del esmalte"],
+		["HP", "Hipoplasia del esmalte"],
+		["HM", "Hipomineralización"],
+		["FLU", "Fluorosis"],
+		["M", "Mesializado"],
+		["D", "Distalizado"],
+		["V", "Vestibularizado"],
+		["P", "Palatinizado"],
+		["L", "Lingualizado"],
+		["FFP", "Fosas y fisuras profundas"],
 	],
 );
 
@@ -254,6 +287,7 @@ const NATURAL_ONLY: readonly FindingCode[] = [
 	"temporaryRestoration",
 	"sealant",
 	"pulpTreatment",
+	"postCore",
 	"rootRemnant",
 	"extraction",
 	"erupting",
@@ -265,6 +299,8 @@ const NATURAL_ONLY: readonly FindingCode[] = [
 	"microdontia",
 	"worn",
 	"ectopic",
+	"enamelDefect",
+	"deepFissures",
 ];
 
 /**
